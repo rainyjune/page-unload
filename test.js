@@ -36,22 +36,20 @@ var storage = (function() {
   }
 })();
 
+// #1 beforeunload
 window.onbeforeunload = function () {
-  storage.setLocalData("\nonbeforeunload " + document.title);
+  storage.setLocalData("\n #1 onbeforeunload " + document.title);
 };
 
+// # 2 pagehide
+window.onpagehide = function () {
+  storage.setLocalData("\n #2 onpagehide " + document.title);
+};
+
+// # 3 unload
 window.onunload = function () {
-  storage.setLocalData("\nonunload " + document.title);
+  storage.setLocalData("\n #3 onunload " + document.title);
 };
-
-var isIOS = !!navigator.platform.match(/iPhone|iPod|iPad/);
-
-if (isIOS) {
-  alert('is iOS!');
-  window.onpagehide = function () {
-    storage.setLocalData("\nonpagehide " + document.title);
-  };
-}
 
 window.onload = function() {
   storage.setLocalData("\nonload " + document.title);
