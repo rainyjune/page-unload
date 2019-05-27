@@ -44,6 +44,15 @@ window.onunload = function () {
   storage.setLocalData("\nonunload " + document.title);
 };
 
+var isIOS = !!navigator.platform.match(/iPhone|iPod|iPad/);
+
+if (isIOS) {
+  alert('is iOS!');
+  window.onpagehide = function () {
+    storage.setLocalData("\nonpagehide " + document.title);
+  };
+}
+
 window.onload = function() {
   storage.setLocalData("\nonload " + document.title);
 
