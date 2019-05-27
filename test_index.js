@@ -52,6 +52,10 @@ if (isIOS) {
   window.onpagehide = function () {
     storage.setLocalData("\nonpagehide  index1111.html");
   };
+} else {
+  window.onpagehide = function () {
+    storage.setLocalData("\nonpagehide  index1111.html (not iOS)");
+  };
 }
 
 window.onload = function() {
