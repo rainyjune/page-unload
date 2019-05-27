@@ -38,11 +38,11 @@ var storage = (function() {
 })();
 
 window.onbeforeunload = function () {
-  storage.setLocalData("\nonbeforeunload " + title);
+  storage.setLocalData("\nonbeforeunload index1111.html");
 };
 
 window.onunload = function () {
-  storage.setLocalData("\nonunload " + title);
+  storage.setLocalData("\nonunload  index1111.html");
 };
 
 var isIOS = !!navigator.platform.match(/iPhone|iPod|iPad/);
@@ -50,12 +50,12 @@ var isIOS = !!navigator.platform.match(/iPhone|iPod|iPad/);
 if (isIOS) {
   alert('is iOS!');
   window.onpagehide = function () {
-    storage.setLocalData("\nonpagehide " + title);
+    storage.setLocalData("\nonpagehide  index1111.html");
   };
 }
 
 window.onload = function() {
-  storage.setLocalData("\nonload " + title);
+  storage.setLocalData("\nonload  index1111.html");
 
   setInterval(showLog, 1000);
 
