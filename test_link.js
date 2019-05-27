@@ -1,4 +1,4 @@
-var title = 'link.html';
+var title = 'link22222.html';
 var storage = (function() {
   if (window.localStorage) {
     //alert('localStorage supported');
