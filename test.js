@@ -1,17 +1,56 @@
+var storage = (function() {
+  if (window.localStorage) {
+    //alert('localStorage supported');
+  } else if (Cookies){
+    //alert("Local storage is not supported, using Cookies");
+  } else {
+    alert('exception');
+  }
+
+  var key = 'event';
+  return {
+    setLocalData: function(msg) {
+      var oldVal = '';
+      if (window.localStorage) {
+        oldVal = localStorage.getItem(key) || '';
+        localStorage.setItem(key,  oldVal + msg);
+      } else if (Cookies) {
+        oldVal = Cookies.get(key) || '';
+        Cookies.set(key, oldVal + msg);
+      }
+    },
+    getLocalData: function() {
+      if (window.localStorage) {
+        return localStorage.getItem(key) || '';
+      } else if (Cookies) {
+        return Cookies.get(key) || '';
+      }
+    },
+    removeLocalData: function() {
+      if (window.localStorage) {
+        localStorage.removeItem(key);
+      } else if (Cookies) {
+        Cookies.expire(key);
+      }
+    }
+  }
+})();
 
 window.onbeforeunload = function () {
-  setLocalData("\nonbeforeunload " + document.title);
+  storage.setLocalData("\nonbeforeunload " + document.title);
 };
 
 window.onunload = function () {
-  setLocalData("\nonunload " + document.title);
+  storage.setLocalData("\nonunload " + document.title);
 };
 
 window.onload = function() {
+  storage.setLocalData("\nonload " + document.title);
+
   setInterval(showLog, 1000);
 
   id('clearbtn').onclick = function() {
-    localStorage.removeItem('event');
+    storage.removeLocalData();
     showLog();
   }
 };
@@ -20,22 +59,6 @@ function id(str) {
   return document.getElementById(str);
 }
 
-if (window.localStorage) {
-  console.log('localStorage supported');
-} else {
-  alert("Local storage is not supported");
-}
-
-
-function setLocalData(msg) {
-  var old = localStorage.getItem('event') || '';
-  localStorage.setItem('event',  old + msg);
-}
-
-function getLocalData() {
-  return localStorage.getItem('event');
-}
-
 function showLog() {
-  id('log').value = getLocalData() || '[empty]';
+  id('log').value = storage.getLocalData() || '[empty]';
 }
