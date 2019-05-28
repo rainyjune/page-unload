@@ -77,11 +77,19 @@ var unloadHandler = function (e) {
 };
 
 if ('onpageshow' in window) {
-  window.onpageshow = loadHandler;
-  window.onpagehide = unloadHandler;
+  addEvent(window, 'pageshow', loadHandler);
+  addEvent(window, 'pagehide', unloadHandler);
 } else {
-  window.onload = loadHandler;
-  window.onunload = unloadHandler;
+  addEvent(window, 'load', loadHandler);
+  addEvent(window, 'unload', unloadHandler);
+}
+
+function addEvent(target, type, listener) {
+  if (window.addEventListener) {
+    target.addEventListener(type, listener, false);
+  } else {
+    target.attachEvent('on' + type, listener);
+  }
 }
 
 function id(str) {
