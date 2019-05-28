@@ -53,6 +53,19 @@ window.onunload = function () {
 };
 */
 
+var loadHandler = function(e) {
+  e = e || window.event;
+  storage.setLocalData("\n " + e.type + " " + document.title + ' on ' + (new Date()).toString());
+
+  showLog();
+  setInterval(showLog, 1000);
+
+  id('clearbtn').onclick = function() {
+    storage.removeLocalData();
+    showLog();
+  };
+};
+
 var unloadHandler = function (e) {
   e = e || window.event;
   var orders = ['beforeunload', 'pagehide', 'unload'];
@@ -61,22 +74,13 @@ var unloadHandler = function (e) {
   storage.setLocalData("\n #[" + (index + 1) + "] " + type + " " + document.title + ' on ' + (new Date()).toString());
 };
 
-if ('onpagehide' in window) {
+if ('onpageshow' in window) {
+  window.onpageshow = loadHandler;
   window.onpagehide = unloadHandler;
 } else {
+  window.onload = loadHandler;
   window.onunload = unloadHandler;
 }
-
-window.onload = function() {
-  storage.setLocalData("\nonload " + document.title + ' on ' + (new Date()).toString());
-
-  setInterval(showLog, 1000);
-
-  id('clearbtn').onclick = function() {
-    storage.removeLocalData();
-    showLog();
-  }
-};
 
 function id(str) {
   return document.getElementById(str);
