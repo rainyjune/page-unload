@@ -36,6 +36,8 @@ var storage = (function() {
   }
 })();
 
+var logarea = id('log');
+
 /*
 // #1 beforeunload
 window.onbeforeunload = function () {
@@ -87,7 +89,12 @@ function id(str) {
 }
 
 function showLog() {
-  id('log').value = storage.getLocalData() || '[empty]';
+  logarea.value = storage.getLocalData() || '[empty]';
+  if (logarea.scrollTo) {
+    logarea.scrollTo({
+      top: logarea.scrollHeight
+    });
+  }
 }
 
 function indexOf(arr, searchElement) {
