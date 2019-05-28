@@ -16,7 +16,7 @@ var storage = (function() {
         localStorage.setItem(key,  oldVal + msg);
       } else if (Cookies) {
         oldVal = Cookies.get(key) || '';
-        Cookies.set(key, oldVal + msg);
+        Cookies.set(key, oldVal + msg, { expires: Infinity });
       }
     },
     getLocalData: function() {
@@ -38,21 +38,21 @@ var storage = (function() {
 
 // #1 beforeunload
 window.onbeforeunload = function () {
-  storage.setLocalData("\n #1 onbeforeunload " + document.title);
+  storage.setLocalData("\n #1 onbeforeunload " + document.title + ' on ' + (new Date()).toString());
 };
 
 // # 2 pagehide
 window.onpagehide = function () {
-  storage.setLocalData("\n #2 onpagehide " + document.title);
+  storage.setLocalData("\n #2 onpagehide " + document.title + ' on ' + (new Date()).toString());
 };
 
 // # 3 unload
 window.onunload = function () {
-  storage.setLocalData("\n #3 onunload " + document.title);
+  storage.setLocalData("\n #3 onunload " + document.title + ' on ' + (new Date()).toString());
 };
 
 window.onload = function() {
-  storage.setLocalData("\nonload " + document.title);
+  storage.setLocalData("\nonload " + document.title + ' on ' + (new Date()).toString());
 
   setInterval(showLog, 1000);
 
